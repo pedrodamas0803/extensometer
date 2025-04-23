@@ -11,19 +11,22 @@ class Particle:
     def __init__(self, image_name: str,
                 image: np.ndarray,
                 position:tuple ,
-                file:str = 'points', 
-                name:str = 'ppt'):
+                bbox_size:int = 60,):
+                # file:str = 'points', 
+                # name:str = 'ppt'):
         
         self.image_name = image_name
         self.image = image
         self.init_position = position
         self.centroid = None
-
+        self.bbox_size = bbox_size
         self.pz, self.py, self.px = self.init_position
 
-        self.pimage = self.image[int(self.pz)-30:int(self.pz)+30, 
-                                 int(self.py)-30:int(self.py)+30, 
-                                 int(self.px)-30:int(self.px)+30]
+        bb = self.bbox_size//2
+
+        self.pimage = self.image[int(self.pz)-bb:int(self.pz)+bb, 
+                                 int(self.py)-bb:int(self.py)+bb, 
+                                 int(self.px)-bb:int(self.px)+bb]
         
         self.refine_centroid()
 
